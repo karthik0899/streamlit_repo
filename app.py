@@ -18,6 +18,7 @@ PERCENTILE_METRIC={values['percentile_metric']}
 PERCENTILE_VALUE={values['percentile_value']}
 INSTRUCTION_TEXT={values['instruction_text']}
 bucket_name={values['bucket_name']}
+upload_to_gcp={values['upload_to_gcp']}
 key_path={key_path}
     """
 
@@ -101,8 +102,8 @@ def main():
     values['bucket_name'] = st.text_input("Bucket Name")
     st.caption("Name of the bucket for storing data.")
     
-    # values['source_directory'] = st.text_input("Source Directory")
-    # st.caption("Directory path where source files are located.")
+    values['upload_to_gcp'] = st.selectbox("Upload to GCP", ["True", "False"])
+    st.caption("Enable or disable uploading to GCP.")
     
 
 
