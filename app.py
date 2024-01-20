@@ -28,6 +28,18 @@ def generate_docker_command(is_mac, env_path, main_folder_path, json_file_path):
     return f"docker run {platform_cmd}--env-file {env_path} -v {output_volume}:/data/output -v {json_file_path}:/data/gcp_unique.json karthikrathod/data_scraping_docker:latest"
 
 def main():
+    background_image = """
+    <style>
+    [data-testid="stAppViewContainer"] > .main {
+        background-image: url("https://images.unsplash.com/photo-1524334228333-0f6db392f8a1?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: 100vw 100vh;  # This sets the size to cover 100% of the viewport width and height
+        background-position: center;  
+        background-repeat: no-repeat;
+    }
+    </style>
+    """
+
+    st.markdown(background_image, unsafe_allow_html=True)
     st.title("Environmental setup Generator and Docker Command Creator")
 
     # Define parameters and options
