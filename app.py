@@ -18,7 +18,6 @@ PERCENTILE_METRIC={values['percentile_metric']}
 PERCENTILE_VALUE={values['percentile_value']}
 INSTRUCTION_TEXT={values['instruction_text']}
 bucket_name={values['bucket_name']}
-# source_directory= {values['source_directory']}
 key_path={key_path}
     """
 
@@ -28,7 +27,7 @@ def generate_docker_command(is_mac, env_path, main_folder_path, json_file_path):
     return f"docker run {platform_cmd}--env-file {env_path} -v {output_volume}:/data/output -v {json_file_path}:/data/gcp_unique.json karthikrathod/data_scraping_docker:latest"
 
 def main():
-    st.title("ENV File Generator and Docker Command Creator")
+    st.title("Environmental setup Generator and Docker Command Creator")
 
     # Define parameters and options
     params_options =  [
@@ -48,8 +47,15 @@ def main():
     "title",
     "year"
 ]
-    sort_options = ['classic_factor desc', 'citation_count asc', 'year desc']
-    subset_options = ['database:astronomy', 'database:physics', 'database:general']
+    sort_options = ['classic_factor desc', 'classic_factor asc',
+    'citation_count desc',
+    'citation_count asc',
+    'read_count desc',
+    'read_count asc'
+]
+    subset_options = ['database:astronomy', 'database:physics', 'database:general',"database:earthsicence"]
+    metric_options = ['read_count', 'citation_count', 'classic_factor']
+
 
     # Checkboxes for parameters
     st.text("Select Parameters")
@@ -83,7 +89,7 @@ def main():
     values['percentile_filtering'] = st.selectbox("Percentile Filtering", ["True", "False"])
     st.caption("Enable or disable percentile filtering.")
     
-    values['percentile_metric'] = st.text_input("Percentile Metric")
+    values['percentile_metric']  = st.selectbox("percentile_metric", metric_options)
     st.caption("Enter the metric for percentile calculation.")
     
     values['percentile_value'] = st.number_input("Percentile Value", min_value=0.0, max_value=1.0, step=0.01)
@@ -95,8 +101,8 @@ def main():
     values['bucket_name'] = st.text_input("Bucket Name")
     st.caption("Name of the bucket for storing data.")
     
-    values['source_directory'] = st.text_input("Source Directory")
-    st.caption("Directory path where source files are located.")
+    # values['source_directory'] = st.text_input("Source Directory")
+    # st.caption("Directory path where source files are located.")
     
 
 
