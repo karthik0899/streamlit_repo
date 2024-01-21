@@ -71,14 +71,17 @@ def main():
     metric_options = ['read_count', 'citation_count', 'classic_factor']
 
 
-    # Checkboxes for parameters
+  # Checkboxes for parameters with bibcode made compulsory
     st.text("Select Parameters")
-    st.caption("Choose the parameters to be included in the dataframe.")
-    selected_params = {}
+    st.caption("Choose the parameters to be included in the dataframe. 'bibcode' is selected by default and is required.")
+    selected_params = {"bibcode": True}  # Pre-selecting bibcode as true
     cols = st.columns(4)  # Adjust the number of columns as needed
     for i, param in enumerate(params_options):
-        with cols[i % 4]:  # Adjust the index for the number of columns
-            selected_params[param] = st.checkbox(param, key=param)
+        if param == "bibcode":
+            st.checkbox("bibcode", value=True, disabled=True, key="bibcode")  # Making bibcode checkbox always selected and disabled
+        else:
+            with cols[i % 4 - 1]:  # Adjusting index for columns considering bibcode is always selected
+                selected_params[param] = st.checkbox(param, key=param)
 
     # Create input fields with explanations
     values = {}
