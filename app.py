@@ -22,10 +22,11 @@ upload_to_gcp={values['upload_to_gcp']}
 key_path={key_path}
     """
 
-def generate_docker_command(is_mac, env_path, main_folder_path, json_file_path):
+def generate_docker_command(is_mac, env_path, main_folder_path, json_file_path, container_name="data_extraction_container"):
     platform_cmd = "--platform linux/amd64 " if is_mac else ""
     output_volume = os.path.join(main_folder_path, "data/output")
-    return f"docker run {platform_cmd}--env-file {env_path} -v {output_volume}:/data/output -v {json_file_path}:/data/gcp_unique.json karthikrathod/data_scraping_docker:latest"
+    # Including the container name in the command with `--name` flag
+    return f"docker run --name {container_name} {platform_cmd}--env-file {env_path} -v {output_volume}:/data/output -v {json_file_path}:/data/gcp_unique.json karthikrathod/data_scraping_docker:latest"
 
 def main():
     background_image = """
