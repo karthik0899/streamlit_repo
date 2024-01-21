@@ -131,15 +131,16 @@ def main():
         #                    file_name="new.env",
         #                    mime="text/plain")
 
-       # Docker Command Creator Section
+    # Docker Command Creator Section
     st.header("Docker Command Creator")
     is_mac = st.checkbox("Is the host machine a Mac?")
     env_file_path = st.text_input("Path to .env file")
     main_folder_path = st.text_input("Path to main folder")
     json_file_path = st.text_input("Path to GCP credentials JSON file")
+    container_name = st.text_input("Container Name", value="data_extraction_container")  # Default value provided
 
     if st.button("Generate Docker Command"):
-        docker_command = generate_docker_command(is_mac, env_file_path, main_folder_path, json_file_path)
+        docker_command = generate_docker_command(is_mac, env_file_path, main_folder_path, json_file_path, container_name)
         st.text_area("Docker Command", docker_command, height=100)
 if __name__ == "__main__":
     main()
